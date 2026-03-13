@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line, CartesianGrid } from 'recharts';
 import { getDashboard } from '../context/api';
 import { useLang } from '../context/LanguageContext';
+import { useLocation } from '../context/LocationContext';
 
 function StatCard({ icon, label, value, suffix, accent }) {
   const [display, setDisplay] = useState(0);
@@ -29,26 +30,51 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null;
 };
 
+const seasonColors = { Kharif: '#4ADE80', Rabi: '#F59E0B', Zaid: '#22D3EE', Summer: '#F97316', Boro: '#A78BFA' };
+
 export default function Dashboard() {
   const { t } = useLang();
+  const { state, district, season } = useLocation();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     getDashboard().then(r => { setData(r.data); setLoading(false); }).catch(() => setLoading(false));
-  }, []);
+  }, [state, district, season]);
 
   if (loading) return <div style={{ textAlign: 'center', paddingTop: '80px' }}><div className="spinner" style={{ width: '40px', height: '40px' }} /></div>;
   if (!data) return <div style={{ color: 'var(--text-muted)', paddingTop: '40px' }}>Could not load dashboard. Make sure backend is running.</div>;
+
+  const sColor = seasonColors[season] || '#4ADE80';
 
   return (
     <div className="fade-in">
       <div className="page-header">
         <div>
           <div className="page-title">🌾 {t.dashTitle}</div>
-          <div className="page-sub">{t.dashSub}</div>
+          {/* Dynamic location subtitle */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '6px' }}>
+            <span style={{ fontSize: '13px', color: '#64748B' }}>📍 {district}, {state}, India</span>
+            <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#334155' }} />
+            <span style={{ fontSize: '12px', fontWeight: 700, color: sColor, background: sColor + '15', padding: '2px 10px', borderRadius: '20px', border: `1px solid ${sColor}30` }}>
+              {season === 'Kharif' ? '🌧️' : season === 'Rabi' ? '❄️' : season === 'Zaid' ? '☀️' : '🌱'} {season} Season 2025
+            </span>
+          </div>
         </div>
         <span className="tag tag-green">{t.allActive}</span>
+      </div>
+
+      {/* Location info banner */}
+      <div style={{ background: `${sColor}08`, border: `1px solid ${sColor}20`, borderRadius: '12px', padding: '12px 16px', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '14px' }}>
+        <span style={{ fontSize: '24px' }}>🗺️</span>
+        <div>
+          <span style={{ fontWeight: 700, color: '#CBD5E1' }}>{district} District, {state}</span>
+          <span style={{ color: '#475569', fontSize: '13px', marginLeft: '8px' }}>— {t.cropAdvisory}</span>
+        </div>
+        <div style={{ marginLeft: 'auto', fontSize: '12px', color: '#64748B' }}>
+          Default crop: <span style={{ color: sColor, fontWeight: 700 }}>{data.fields?.[0]?.crop || 'Rice'}</span>
+        </div>
       </div>
 
       <div className="grid-4">
@@ -60,7 +86,7 @@ export default function Dashboard() {
 
       <div className="grid-2">
         <div className="card mb-20">
-          <div className="section-title">🌤 {t.weeklyWeather}</div>
+          <div className="section-title">🌤 {t.weeklyWeather} · {district}</div>
           <ResponsiveContainer width="100%" height={180}>
             <BarChart data={data.weather} barGap={4}>
               <CartesianGrid stroke="#1E293B" strokeDasharray="4 4" vertical={false} />
@@ -101,13 +127,13 @@ export default function Dashboard() {
               <XAxis dataKey="month" tick={{ fill: '#64748B', fontSize: 12 }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fill: '#64748B', fontSize: 11 }} axisLine={false} tickLine={false} />
               <Tooltip content={<CustomTooltip />} />
-              <Line type="monotone" dataKey="yield" name="Yield" stroke="#4ADE80" strokeWidth={2.5} dot={{ fill: '#4ADE80', r: 4 }} activeDot={{ r: 6 }} />
+              <Line type="monotone" dataKey="yield" name="Yield" stroke={sColor} strokeWidth={2.5} dot={{ fill: sColor, r: 4 }} activeDot={{ r: 6 }} />
             </LineChart>
           </ResponsiveContainer>
         </div>
 
         <div className="card">
-          <div className="section-title">🗺 {t.myFields}</div>
+          <div className="section-title">🗺 {t.myFields} · {state}</div>
           {data.fields.map((f, i) => (
             <div key={i} style={{ padding: '12px', background: 'var(--bg)', borderRadius: '10px', marginBottom: i < data.fields.length - 1 ? '10px' : 0, border: '1px solid var(--border)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
@@ -122,7 +148,7 @@ export default function Dashboard() {
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <div className="progress-bar" style={{ flex: 1, height: '6px' }}>
-                  <div className="progress-fill" style={{ width: `${f.soil_moisture}%`, background: f.soil_moisture < 45 ? '#EF4444' : '#4ADE80' }} />
+                  <div className="progress-fill" style={{ width: `${f.soil_moisture}%`, background: f.soil_moisture < 45 ? '#EF4444' : sColor }} />
                 </div>
                 <span style={{ fontSize: '11px', color: 'var(--text-muted)', minWidth: '70px' }}>💧 {f.soil_moisture}%</span>
               </div>

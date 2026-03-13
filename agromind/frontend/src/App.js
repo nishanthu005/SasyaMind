@@ -6,6 +6,7 @@ import YieldPrediction from './pages/YieldPrediction';
 import Irrigation from './pages/Irrigation';
 import Fertilizer from './pages/Fertilizer';
 import { LanguageProvider } from './context/LanguageContext';
+import { LocationProvider } from './context/LocationContext';
 import './App.css';
 
 function AppInner() {
@@ -38,7 +39,9 @@ function AppInner() {
 export default function App() {
   return (
     <LanguageProvider>
-      <AppInner />
+      <LocationProvider>
+        <AppInner />
+      </LocationProvider>
     </LanguageProvider>
   );
 }
