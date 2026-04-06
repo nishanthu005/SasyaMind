@@ -25,6 +25,12 @@ export default function EnterpriseSidebar({ currentPage, setCurrentPage, userRol
       roles: ['admin', 'manager', 'supervisor']
     },
     {
+      id: 'climate',
+      icon: '🌍',
+      label: 'Climate Simulation',
+      roles: ['admin', 'manager', 'supervisor', 'user']
+    },
+    {
       id: 'team',
       icon: '👥',
       label: 'Team Management',

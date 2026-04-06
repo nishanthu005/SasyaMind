@@ -17,6 +17,7 @@ export default function Sidebar({ activeTab, setActiveTab, sensorData }) {
     { id: 'yield',      icon: '📊', label: t.navYield },
     { id: 'irrigation', icon: '💧', label: t.navIrrigation },
     { id: 'fertilizer', icon: '🧪', label: t.navFertilizer },
+    { id: 'climate',    icon: '🌍', label: 'Climate Simulation' },
   ];
 
   const seasonIcon = season === 'Kharif' ? '🌧️' : season === 'Rabi' ? '❄️' : season === 'Zaid' ? '☀️' : season === 'Boro' ? '💧' : '🌱';

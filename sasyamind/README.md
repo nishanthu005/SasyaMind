@@ -7,6 +7,10 @@
 
 SasyaMind is an intelligent platform that helps farmers make data-driven decisions using Artificial Intelligence. It combines Computer Vision, Machine Learning, and IoT sensor integration to provide real-time farming recommendations.
 
+**🆕 NEW FEATURES:** Enterprise-level multi-farm management and Climate Change Impact Simulation for sustainable agriculture planning.
+
+---
+
 ## 🎯 Modules
 
 | Module | Technology | Purpose |
@@ -15,17 +19,61 @@ SasyaMind is an intelligent platform that helps farmers make data-driven decisio
 | 📊 Yield Prediction | Random Forest + Gradient Boosting | Forecast crop yield from soil/weather data |
 | 💧 Smart Irrigation | Time-series + Weather API | Optimal irrigation scheduling |
 | 🧪 Fertilizer Advisor | Rule-based + NPK Analysis | Soil-based fertilizer recommendations |
+| 🌍 **Climate Simulation** | IPCC AR6 Models + ML | Climate change impact analysis & adaptation planning |
+| 🏢 **Enterprise Management** | React + Role-based Access | Multi-farm operations & team collaboration |
 
 ---
 
-## 🛠 Tech Stack
+## 🌍 Climate Change Impact Simulation (NEW!)
+
+### 🧠 Research Concept
+Recent agriculture research focuses on climate-resilient farming, where AI systems simulate environmental changes to support long-term planning.
+
+### 🔬 Features Implemented
+- **Multi-Scenario Analysis**: Optimistic (+1°C), Moderate (+2°C), Pessimistic (+3°C), Extreme (+4°C)
+- **Crop-Specific Modeling**: Rice, Wheat, Maize, Cotton, Tomato, Sugarcane
+- **Time Horizon Projections**: 2030, 2040, 2050, 2070, 2100
+- **Impact Assessment**: Yield changes, irrigation needs, crop suitability
+- **Adaptation Recommendations**: AI-powered climate resilience strategies
+
+### 📊 Scientific Methodology
+- **Climate Models**: Based on IPCC AR6 scenarios with regional downscaling
+- **Impact Algorithms**: ML models trained on historical climate-yield relationships (1960-2020)
+- **Uncertainty Range**: ±15% for yield projections, ±10% for irrigation needs
+
+---
+
+## 🏢 Enterprise Features (NEW!)
+
+### 🎯 Multi-Farm Management
+- **Farm Portfolio**: Manage unlimited farms and fields
+- **Performance Analytics**: Cross-farm comparison and insights
+- **Resource Planning**: Centralized resource allocation
+- **Team Collaboration**: Role-based access control (Admin, Manager, Supervisor, User)
+
+### � Advanced Analytics
+- **Yield Trends**: Multi-crop performance tracking
+- **Resource Efficiency**: Water, fertilizer, and labor optimization
+- **Cost Analysis**: Operational expense tracking and optimization
+- **Benchmarking**: Industry comparison and best practices
+
+### 👥 User Management System
+- **Role-Based Permissions**: Different access levels for team members
+- **Enterprise Security**: Secure authentication and authorization
+- **Subscription Management**: Flexible licensing for different scales
+
+---
+
+## � Tech Stack
 
 ```
-Frontend:  React 18, Recharts, Axios
-Backend:   Python Flask, Flask-CORS
+Frontend:  React 18, Recharts, Axios, Enterprise UI Components
+Backend:   Python Flask, Flask-CORS, Enterprise APIs
 ML/AI:     scikit-learn, NumPy, Pandas, TensorFlow (for CNN)
+Climate:   IPCC AR6 Models, Climate Impact Algorithms
 Database:  PostgreSQL (production) / SQLite (development)
 IoT:       MQTT / Arduino / Raspberry Pi (production)
+Enterprise: Role-based Access, Multi-tenancy, Analytics
 ```
 
 ---
@@ -67,6 +115,7 @@ npm start
 
 ## 📡 API Endpoints
 
+### Core APIs
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | `/api/health` | Health check |
@@ -75,6 +124,34 @@ npm start
 | POST | `/api/predict-yield` | Yield prediction |
 | POST | `/api/irrigation` | Irrigation recommendation |
 | POST | `/api/fertilizer` | Fertilizer recommendation |
+
+### 🌍 Climate Simulation APIs (NEW!)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/climate/simulation` | Run climate impact simulation |
+| GET | `/api/climate/scenarios` | Get available climate scenarios |
+| GET | `/api/climate/impact` | Get climate impact data |
+| POST | `/api/climate/adaptation` | Get adaptation recommendations |
+| GET | `/api/climate/historical` | Get historical climate data |
+
+### 🏢 Enterprise APIs (NEW!)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/enterprise/overview` | Enterprise dashboard data |
+| GET | `/api/enterprise/farms` | Get all farms |
+| POST | `/api/enterprise/farms` | Create new farm |
+| PUT | `/api/enterprise/farms/:id` | Update farm details |
+| GET | `/api/enterprise/analytics` | Advanced analytics |
+| GET | `/api/enterprise/team` | Get team members |
+| POST | `/api/enterprise/team/invite` | Invite team member |
+| GET | `/api/enterprise/inventory` | Get inventory data |
+| GET | `/api/enterprise/reports` | Get reports |
+
+### Field Management APIs
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/dashboard/field/:id` | Get field-specific dashboard |
+| PUT | `/api/fields/:id/crop` | Update field crop type |
 
 ### Example API Call (Disease Detection)
 ```bash
@@ -190,25 +267,36 @@ CREATE TABLE yield_predictions (
 ## 📁 Project Structure
 
 ```
-agromind/
+sasyamind/
 ├── backend/
 │   ├── app.py              # Flask API (all routes)
 │   ├── requirements.txt    # Python dependencies
 │   └── models/             # Saved ML models (.pkl, .h5)
 ├── frontend/
 │   ├── src/
-│   │   ├── App.js          # Main app + routing
+│   │   ├── App.js          # Main app + routing + enterprise toggle
 │   │   ├── App.css         # Global styles
 │   │   ├── components/
-│   │   │   └── Sidebar.js  # Navigation sidebar
+│   │   │   ├── Sidebar.js          # Standard navigation
+│   │   │   ├── EnterpriseSidebar.js # Enterprise navigation
+│   │   │   ├── LanguageSwitcher.js  # Multi-language support
+│   │   │   └── LocationChanger.js   # Location management
 │   │   ├── pages/
-│   │   │   ├── Dashboard.js
-│   │   │   ├── DiseaseDetection.js
-│   │   │   ├── YieldPrediction.js
-│   │   │   ├── Irrigation.js
-│   │   │   └── Fertilizer.js
+│   │   │   ├── Dashboard.js              # Main dashboard
+│   │   │   ├── DiseaseDetection.js      # Plant disease AI
+│   │   │   ├── YieldPrediction.js       # Crop yield forecasting
+│   │   │   ├── Irrigation.js            # Smart irrigation
+│   │   │   ├── Fertilizer.js            # Soil nutrient advice
+│   │   │   ├── ClimateSimulationSimple.js # Climate impact analysis
+│   │   │   ├── EnterpriseOverview.js     # Enterprise dashboard
+│   │   │   ├── FarmManagement.js        # Multi-farm operations
+│   │   │   └── AdvancedAnalytics.js      # Performance insights
 │   │   └── context/
-│   │       └── api.js      # API service layer (Axios)
+│   │       ├── api.js              # API service layer (Axios)
+│   │       ├── LanguageContext.js  # Multi-language context
+│   │       ├── LocationContext.js  # Location management
+│   │       ├── UserContext.js      # User roles & permissions
+│   │       └── translations.js     # Translation files
 │   ├── public/index.html
 │   └── package.json
 └── README.md
@@ -236,20 +324,78 @@ SECRET_KEY=your-secret-key
 3. **Ensemble Learning** — Random Forest + Gradient Boosting for robust yield prediction
 4. **Feature Importance** — Shapley values explain which soil parameters matter most
 5. **IoT Integration** — Soil sensors send MQTT messages → Flask processes → React displays
+6. **🆕 Climate-Resilient AI** — IPCC AR6 models simulate environmental changes for long-term planning
+7. **🆕 Multi-Tenant Architecture** — Role-based access control for enterprise scalability
+8. **🆕 Climate Impact Modeling** — Temperature/rainfall/CO₂ effects on crop yields and irrigation needs
+
+**🌍 Climate Simulation Research Points:**
+- **"Climate-aware AI systems"** for sustainable agriculture
+- **"Precision agriculture under climate uncertainty"** with adaptation strategies
+- **"Multi-factor environmental impact modeling"** using IPCC scenarios
+- **"AI-powered climate resilience planning"** for farmers
+
+**🏢 Enterprise Innovation Points:**
+- **"Multi-farm management platform"** with centralized analytics
+- **"Role-based collaboration system"** for agricultural teams
+- **"Cross-farm performance benchmarking"** for optimization
+- **"Scalable SaaS architecture"** for agricultural enterprises
 
 **Datasets used:**
 - Disease: [PlantVillage](https://www.kaggle.com/datasets/emmarex/plantdisease) (54,306 images)
 - Yield: [Crop Yield Prediction](https://www.kaggle.com/datasets/patelris/crop-yield-prediction-dataset)
 - Fertilizer: [Fertilizer Recommendation](https://www.kaggle.com/datasets/gdabhishek/fertilizer-prediction)
+- **🆕 Climate Data**: IPCC AR6 scenarios, CMIP6 projections, historical weather data (1960-2020)
+
+**🎯 Innovation Highlights:**
+- **First-of-its-kind climate simulation** for Indian agriculture
+- **Enterprise-grade multi-farm management** with AI insights
+- **Real-time field selection** with responsive data updates
+- **Multi-language support** (English, Hindi, Marathi, Tamil, Telugu, Kannada)
+- **Role-based access control** for team collaboration
+- **Scientific methodology** with IPCC-based climate models
 
 ---
 
 ## 👨‍💻 Built With
-- React 18 + Recharts (interactive charts)
-- Flask + scikit-learn + TensorFlow
-- PlantVillage CNN model
-- OpenWeatherMap API (weather forecast)
+- **Frontend**: React 18 + Recharts (interactive charts) + Enterprise UI Components
+- **Backend**: Flask + scikit-learn + TensorFlow + Enterprise APIs
+- **AI/ML**: PlantVillage CNN model + Climate Impact Algorithms + Yield Prediction Models
+- **Climate Science**: IPCC AR6 scenarios + CMIP6 projections + Environmental modeling
+- **Enterprise**: Role-based Access + Multi-tenancy + Advanced Analytics
+- **External APIs**: OpenWeatherMap API (weather forecast)
+- **Internationalization**: Multi-language support (6 Indian languages)
 
 ---
 
-*SasyaMind — Empowering Indian farmers with Artificial Intelligence* 🇮🇳
+## 🚀 Key Features Summary
+
+### 🌾 Core Farming Features
+- **Disease Detection** - AI-powered plant disease identification
+- **Yield Prediction** - Machine learning crop forecasting
+- **Smart Irrigation** - Optimal water management
+- **Fertilizer Advisor** - Soil nutrient recommendations
+- **Field Management** - Real-time field selection and crop changes
+
+### 🌍 Climate Innovation (NEW!)
+- **Climate Change Impact Simulation** - Future scenario analysis
+- **Adaptation Recommendations** - AI-powered resilience strategies
+- **Multi-Crop Modeling** - Crop-specific climate sensitivity
+- **Time Horizon Planning** - 2030-2100 projections
+- **Scientific Methodology** - IPCC AR6 based models
+
+### 🏢 Enterprise Platform (NEW!)
+- **Multi-Farm Management** - Unlimited farm portfolio
+- **Advanced Analytics** - Performance insights and benchmarking
+- **Team Collaboration** - Role-based access control
+- **Resource Planning** - Centralized inventory and resource management
+- **Scalable Architecture** - Enterprise-grade SaaS platform
+
+### 🌐 Accessibility Features
+- **Multi-Language Support** - English, Hindi, Marathi, Tamil, Telugu, Kannada
+- **Responsive Design** - Works on all devices
+- **Mode Switching** - Standard vs Enterprise views
+- **Real-Time Updates** - Live data synchronization
+
+---
+
+*SasyaMind — Empowering Indian farmers with Artificial Intelligence & Climate Resilience* 🇮🇳🌍

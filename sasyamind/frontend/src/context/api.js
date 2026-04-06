@@ -24,3 +24,10 @@ export const getInventory = () => API.get('/enterprise/inventory');
 export const updateInventory = (itemId, data) => API.put(`/enterprise/inventory/${itemId}`, data);
 export const getReports = (params) => API.get('/enterprise/reports', { params });
 export const generateReport = (reportConfig) => API.post('/enterprise/reports/generate', reportConfig);
+
+// Climate Simulation API endpoints
+export const runClimateSimulation = (simulationParams) => API.post('/climate/simulation', simulationParams);
+export const getClimateScenarios = () => API.get('/climate/scenarios');
+export const getClimateImpactData = (crop, scenario, timeHorizon) => API.get('/climate/impact', { params: { crop, scenario, timeHorizon } });
+export const getAdaptationRecommendations = (impactData) => API.post('/climate/adaptation', impactData);
+export const getHistoricalClimateData = (location, years) => API.get('/climate/historical', { params: { location, years } });

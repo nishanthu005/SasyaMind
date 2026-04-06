@@ -9,6 +9,7 @@ import Fertilizer from './pages/Fertilizer';
 import EnterpriseOverview from './pages/EnterpriseOverview';
 import FarmManagement from './pages/FarmManagement';
 import AdvancedAnalytics from './pages/AdvancedAnalytics';
+import ClimateSimulationSimple from './pages/ClimateSimulationSimple';
 import { LanguageProvider } from './context/LanguageContext';
 import { LocationProvider } from './context/LocationContext';
 import { UserProvider } from './context/UserContext';
@@ -35,10 +36,12 @@ function AppInner() {
     yield: YieldPrediction,
     irrigation: Irrigation,
     fertilizer: Fertilizer,
+    climate: ClimateSimulationSimple,
     // Enterprise pages
     overview: EnterpriseOverview,
     farms: FarmManagement,
-    analytics: AdvancedAnalytics
+    analytics: AdvancedAnalytics,
+    climate_enterprise: ClimateSimulationSimple
   };
 
   const PageComponent = pages[activeTab] || Dashboard;
